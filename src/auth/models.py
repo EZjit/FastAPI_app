@@ -16,22 +16,9 @@ role = Table(
 )
 
 
-user = Table(
-    'user',
-    metadata,
-    Column('id', Integer, primary_key=True),
-    Column('email', String, nullable=False),
-    Column('username', String, nullable=False),
-    Column('hashed_password', String, nullable=False),
-    Column('registered_at', TIMESTAMP, default=datetime.utcnow),
-    Column('role_id', Integer, ForeignKey(role.c.id)),
-    Column('is_active', Boolean, default=True, nullable=False),
-    Column('is_superuser', Boolean, default=True, nullable=False),
-    Column('is_verified',  Boolean, default=True, nullable=False),
-)
-
-
 class User(SQLAlchemyBaseUserTable[int], Base):
+    __tablename__ = 'user'
+
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     username: Mapped[str] = mapped_column(String, nullable=False)
     registered_at: Mapped[TIMESTAMP] = mapped_column(TIMESTAMP, default=datetime.utcnow)
