@@ -7,10 +7,12 @@ from fastapi.staticfiles import StaticFiles
 
 from src.auth.base_config import auth_backend, fastapi_users
 from src.auth.schemas import UserRead, UserCreate
+from src.config import REDIS_HOST, REDIS_PORT
 from src.operations.router import router as operation_router
 from src.tasks.router import router as tasks_router
 from src.pages.router import router as pages_router
 from src.chat.router import router as chat_router
+from src.auth.router import router as role_router
 
 app = FastAPI(title='Trading App')
 
@@ -32,6 +34,7 @@ app.include_router(operation_router)
 app.include_router(tasks_router)
 app.include_router(pages_router)
 app.include_router(chat_router)
+app.include_router(role_router)
 
 origins = [
     'http://localhost',
@@ -54,5 +57,5 @@ app.add_middleware(
 
 @app.on_event('startup')
 async def startup_event():
-    redis = aioredis.from_url('redis://localhost', encoding='utf8', decode_responses=True)
+    redis = aioredis.from_url(f'redis://{REDIS_HOST}:{REDIS_PORT}', encoding='utf8', decode_responses=True)
     FastAPICache.init(RedisBackend(redis), prefix='fastapi-cache')

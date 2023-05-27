@@ -1,4 +1,7 @@
+from typing import Any
+
 from fastapi_users import schemas
+from pydantic import BaseModel, Json
 
 
 class UserRead(schemas.BaseUser[int]):
@@ -13,3 +16,19 @@ class UserCreate(schemas.BaseUserCreate):
 
 class UserUpdate(schemas.BaseUserUpdate):
     username: str
+
+
+class RoleBase(BaseModel):
+    name: str
+    permissions: str
+
+
+class RoleCreate(RoleBase):
+    ...
+
+
+class RoleRead(RoleBase):
+    id: int
+
+    class Config:
+        orm_mode = True
