@@ -5,7 +5,9 @@ Features:
 3) Background processing with Celery (Flower for tasks monitoring)
 4) Mailing background task (SMTP). (Ensure you write a real email when registering user!)
 5) Chatting module with FastAPI async websockets
-6) Dockerized
+6) SQLAlchemy ORM and Alembic migrations
+7) Jinja2 templates
+8) Dockerized
 
 Installation:
 1) Install Docker
